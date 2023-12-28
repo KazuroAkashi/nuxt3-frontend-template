@@ -1,0 +1,49 @@
+
+// Calculate brightness of a given color.
+@function brightness($color) {
+    @return calc(((red($color) * .299) + (green($color) * .587) + (blue($color) * .114)) / 255 * 100%);
+}
+
+@function abs_c($a) {
+    @return if($a < 0, -$a, $a);
+}
+
+// Compares contrast of a given color to the light/dark arguments and returns whichever is most "contrasty"
+@function color-contrast($color, $dark: $dark-color, $light: $light-color) {
+    @if $color == null {
+        @return null;
+    }
+    @else {
+        $color-brightness: brightness($color);  
+        $light-text-brightness: brightness($light);
+        $dark-text-brightness: brightness($dark);
+
+        @return if(abs_c($color-brightness - $light-text-brightness) > abs_c($color-brightness - $dark-text-brightness), $light, $dark);  
+    }
+}
+
+$dark-color: #222;
+$dark-color-2: #333;
+$dark-color-3: #444;
+
+$light-color: #fff;
+$light-color-2: #eee;
+$light-color-3: #ddd;
+
+$primary-color: #0068df;
+$primary-accent: #2386f8;
+
+@mixin theme {
+    --dark-color: #{$dark-color};
+    --dark-color-2: #{lighten($dark-color, 10)};
+    --dark-color-3: #{lighten($dark-color, 30)};
+    
+    --light-color: #{$light-color};
+    --light-color-2: #{darken($light-color, 10)};
+    --light-color-3: #{darken($light-color, 30)};
+
+    --primary-color: #{$primary-color};
+    --primary-accent: #{$primary-accent};
+    --primary-color-contrast: #{color-contrast($primary-color)}; 
+    --primary-accent-contrast: #{color-contrast($primary-accent)}; 
+}

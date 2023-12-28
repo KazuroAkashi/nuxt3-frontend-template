@@ -1,0 +1,73 @@
+* {
+  @include theme;
+
+  --foreground-color: var(--dark-color);
+  --foreground-color-2: var(--dark-color-2);
+  --foreground-color-3: var(--dark-color-3);
+
+  --background-color: var(--light-color);
+  --background-color-2: var(--light-color-2);
+  --background-color-3: var(--light-color-3);
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: 'Nunito', sans-serif;
+
+  color: var(--foreground-color);
+
+  //user-select: none;
+}
+
+.dark-theme, .dark-theme * {
+  --foreground-color: var(--light-color);
+  --foreground-color-2: var(--light-color-2);
+  --foreground-color-3: var(--light-color-3);
+
+  --background-color: var(--dark-color);
+  --background-color-2: var(--dark-color-2);
+  --background-color-3: var(--dark-color-3);
+}
+
+body {
+  background: var(--background-color);
+}
+
+a {
+  text-decoration: none;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes breathe {
+  from {
+    text-shadow: 0 0 5px var(--primary-color);
+  }
+  to {
+    text-shadow: 0 0 15px var(--primary-color);
+  }
+}
+
+@keyframes breathe-end {
+  from {
+    text-shadow: 0 0 10px var(--primary-color);
+  }
+  to {
+    text-shadow: 0 0 1px var(--primary-color);
+  }
+}
+
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+@import 'https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;800&display=swap';
+
+@import 'https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap';
