@@ -1,5 +1,9 @@
 <template>
   <nav class="navbar" ref="nav">
+    <h1 class="title" @click="$navigateTo('/')">
+      <span class="itu">İTÜ</span>
+      <span class="gh">GH</span>
+    </h1>
     <Button
       v-for="button in $props.buttons"
       type="link"
@@ -50,6 +54,23 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.title {
+  margin-right: auto;
+  user-select: none;
+  font-size: 1.8rem;
+
+  cursor: pointer;
+
+  .itu {
+    color: #444;
+  }
+
+  .gh {
+    color: #00d2e1;
+    text-shadow: 0 0 5px #00d2e1;
+  }
+}
+
 .navbar {
   display: flex;
   justify-content: flex-end;
@@ -60,8 +81,7 @@ onMounted(() => {
   background-color: var(--background-color-r1);
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.6);
 
-  padding-right: 50px;
-  padding-left: 50px;
+  padding: 0 70px;
 }
 
 .navlink {

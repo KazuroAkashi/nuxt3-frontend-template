@@ -3,7 +3,7 @@
     <Notifications />
     <Sidebar :buttons="buttons" />
     <div class="inner">
-      <Navbar :buttons="navbuttons" search v-model:nav-height="navHeight" />
+      <Navbar :buttons="navbuttons" v-model:nav-height="navHeight" />
 
       <div class="content" :style="{ '--push-top': navHeight + 'px' }">
         <slot></slot>
