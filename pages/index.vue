@@ -162,10 +162,10 @@ const btnLeftAlign = usePersistentRef('btnLeftAlign', false);
 <style scoped lang="scss">
 .touch {
   .touchscreen & {
-    color: green;
+    color: lime;
   }
 
-  :not(.touchscreen) & {
+  body:not(.touchscreen) & {
     color: red;
   }
 }
