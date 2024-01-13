@@ -3,6 +3,7 @@
     :class="{
       animated: animated_store.animated,
       'dark-theme': darktheme_store.darktheme,
+      touchscreen: useIsTouchscreen(),
     }"
   >
     <NuxtLayout>
