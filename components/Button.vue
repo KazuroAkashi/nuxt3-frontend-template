@@ -211,7 +211,7 @@ onMounted(() => {
     --icon-color: var(--accent-contrast);
   }
 
-  :not(.touchscreen) &:hover {
+  body:not(.touchscreen) &:hover {
     background-color: var(--accent-hover);
     color: var(--accent-hover-contrast);
     box-shadow: 0 0 15px var(--accent-hover);
@@ -247,7 +247,7 @@ onMounted(() => {
 
   border: 1px solid var(--accent-color);
 
-  :not(.touchscreen) &:hover {
+  body:not(.touchscreen) &:hover {
     background-color: var(--accent-hover);
     color: var(--accent-hover-contrast);
     border-color: var(--accent-hover);
@@ -282,7 +282,7 @@ onMounted(() => {
     flex: 1;
   }
 
-  :not(.touchscreen) &:hover {
+  body:not(.touchscreen) &:hover {
     background-color: var(--accent-hover);
     color: var(--accent-hover-contrast);
     box-shadow: 0 0 15px var(--accent-hover);
@@ -330,7 +330,7 @@ onMounted(() => {
     text-shadow: none;
   }
 
-  :not(.touchscreen) &:hover {
+  body:not(.touchscreen) &:hover {
     color: var(--accent-hover);
     // animation: breathe 1s alternate infinite linear;
     text-shadow: 0 0 10px var(--accent-hover);
@@ -362,7 +362,7 @@ onMounted(() => {
   padding-left: var(--padding-vert);
   padding-right: calc(5 * var(--padding-vert));
 
-  :not(.touchscreen) &:hover {
+  body:not(.touchscreen) &:hover {
     background-color: var(--accent-hover);
     color: var(--accent-hover-contrast);
 
