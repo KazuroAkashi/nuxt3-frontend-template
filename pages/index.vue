@@ -149,11 +149,11 @@ watch(darkmode, (val) => {
   useDarkthemeStore().darktheme = val;
 });
 
-const btnType = usePersistentRef('btnType', 0);
-const btnCorners = usePersistentRef('btnCorners', 1);
+const btnType = usePersistentRef('btnType', 1);
+const btnCorners = usePersistentRef('btnCorners', 2);
 const btnText = usePersistentRef('btnText', 'Option Button');
-const btnIcon = usePersistentRef('btnIcon', '');
-const btnRightIcon = usePersistentRef('btnRightIcon', '');
+const btnIcon = usePersistentRef('btnIcon', 'fa-instagram');
+const btnRightIcon = usePersistentRef('btnRightIcon', 'expand_more');
 const btnOnlyIcon = usePersistentRef('btnOnlyIcon', false);
 const btnLeftAlign = usePersistentRef('btnLeftAlign', false);
 </script>
