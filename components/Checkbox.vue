@@ -70,7 +70,7 @@ const checked = defineModel<boolean>();
 
   cursor: pointer;
 
-  &:hover {
+  body:not(.touchscreen) &:hover {
     box-shadow: 0 0 5px var(--primary-color);
   }
 

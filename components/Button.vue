@@ -11,6 +11,8 @@
       :class="btnclasses"
       @click="clicked"
       @auxclick="middleclicked"
+      @touchstart="touching = true"
+      @touchend="touching = false"
     >
       <Icon class="icon" :icon="$props.icon" />
       <Transition name="fade" :css="useAnimatedStore().animated">
@@ -74,6 +76,7 @@ watch(selected, () => {
 });
 
 const hovered = ref(false);
+const touching = ref(false);
 
 const btnclasses = computed(() => ({
   'type-filled': props.type === 'filled',
@@ -95,6 +98,8 @@ const btnclasses = computed(() => ({
   onlyicon: props.onlyicon,
   leftalign: props.leftalign,
   'hover-underline': props.hoverUnderline,
+
+  touching,
 }));
 
 const clicked = () => {
@@ -117,6 +122,8 @@ const middleclicked = () => {
   if (props.href && window) window.open(props.href, '_blank');
 };
 
+const touchend = () => {};
+
 const content = ref() as Ref<HTMLElement>;
 
 let width: Ref<number>;
@@ -129,6 +136,15 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@keyframes ripple {
+  0% {
+  }
+  50% {
+  }
+  100% {
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.3s ease;
@@ -211,6 +227,7 @@ onMounted(() => {
     --icon-color: var(--accent-contrast);
   }
 
+  .touchscreen &.touching,
   body:not(.touchscreen) &:hover {
     background-color: var(--accent-hover);
     color: var(--accent-hover-contrast);
@@ -247,6 +264,7 @@ onMounted(() => {
 
   border: 1px solid var(--accent-color);
 
+  .touchscreen &.touching,
   body:not(.touchscreen) &:hover {
     background-color: var(--accent-hover);
     color: var(--accent-hover-contrast);
@@ -282,6 +300,7 @@ onMounted(() => {
     flex: 1;
   }
 
+  .touchscreen &.touching,
   body:not(.touchscreen) &:hover {
     background-color: var(--accent-hover);
     color: var(--accent-hover-contrast);
@@ -330,6 +349,7 @@ onMounted(() => {
     text-shadow: none;
   }
 
+  .touchscreen &.touching,
   body:not(.touchscreen) &:hover {
     color: var(--accent-hover);
     // animation: breathe 1s alternate infinite linear;
@@ -362,6 +382,7 @@ onMounted(() => {
   padding-left: var(--padding-vert);
   padding-right: calc(5 * var(--padding-vert));
 
+  .touchscreen &.touching,
   body:not(.touchscreen) &:hover {
     background-color: var(--accent-hover);
     color: var(--accent-hover-contrast);

@@ -128,7 +128,7 @@ const click = (index: number) => {
     border-radius: 100vmin;
   }
 
-  &:hover,
+  body:not(.touchscreen) &:hover,
   .optionmenu-wrapper.open & {
     box-shadow: 0 0 5px var(--hover-color);
   }
@@ -162,7 +162,7 @@ const click = (index: number) => {
     transition: 0.2s;
   }
 
-  .optionmenu-wrapper:hover & .icon,
+  body:not(.touchscreen) .optionmenu-wrapper:hover & .icon,
   .optionmenu-wrapper.open & .icon {
     --icon-color: var(--primary-color);
     text-shadow: 0 0 10px var(--hover-color);
