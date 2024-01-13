@@ -12,8 +12,8 @@
       @click="clicked"
       @auxclick="middleclicked"
       @touchstart="touching = true"
-      @touchend="touching = false"
-      @contextmenu="touching = false"
+      @touchend="touchend"
+      @contextmenu="touchend"
     >
       <Icon class="icon" :icon="$props.icon" />
       <Transition name="fade" :css="useAnimatedStore().animated">
@@ -123,7 +123,11 @@ const middleclicked = () => {
   if (props.href && window) window.open(props.href, '_blank');
 };
 
-const touchend = () => {};
+const touchend = () => {
+  setTimeout(() => {
+    touching.value = false;
+  }, 100);
+};
 
 const content = ref() as Ref<HTMLElement>;
 
