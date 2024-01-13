@@ -13,6 +13,7 @@
       @auxclick="middleclicked"
       @touchstart="touching = true"
       @touchend="touching = false"
+      @contextmenu="touching = false"
     >
       <Icon class="icon" :icon="$props.icon" />
       <Transition name="fade" :css="useAnimatedStore().animated">
@@ -99,7 +100,7 @@ const btnclasses = computed(() => ({
   leftalign: props.leftalign,
   'hover-underline': props.hoverUnderline,
 
-  touching,
+  touching: touching.value,
 }));
 
 const clicked = () => {
