@@ -45,6 +45,11 @@
             :href="item.href"
             :righticon="item.sub ? 'expand_more' : ''"
             :class="{ subexpand: item.subopen }"
+            @selected="
+              (selected) => {
+                if (selected) item.subopen = true;
+              }
+            "
             :href-selected="item.sub ? item.sub.filter(obj => obj.href).map(obj => obj.href!) : true"
             >{{ item.title }}</Button
           >
@@ -67,9 +72,10 @@
             :style="{ '--padding': open ? '5px 50px 10px 50px' : '0 0' }"
           >
             <Button
-              v-for="(subitem, index1) in item.sub"
+              v-for="subitem in item.sub"
               type="link"
               :href="subitem.href"
+              :icon="subitem.icon"
               href-selected
               >{{ subitem.title }}</Button
             >

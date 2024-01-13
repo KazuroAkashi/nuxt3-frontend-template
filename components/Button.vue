@@ -34,7 +34,7 @@
 <script setup lang="ts">
 const { $navigateTo, $navlock } = useNuxtApp();
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click', 'selected']);
 
 const props = withDefaults(
   defineProps<{
@@ -68,6 +68,10 @@ const selected = computed(
     (Array.isArray(props.hrefSelected) &&
       props.hrefSelected.includes(useRoute().path)),
 );
+
+watch(selected, () => {
+  emit('selected', selected.value);
+});
 
 const hovered = ref(false);
 
