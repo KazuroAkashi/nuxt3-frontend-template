@@ -25,19 +25,23 @@ const props = defineProps({
     default: 2,
   },
 });
-const emit = defineEmits(['update:modelValue']);
 
-const checked = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit('update:modelValue', value);
-  },
-});
+const checked = defineModel<boolean>();
 </script>
 
 <style scoped lang="scss">
+.checkbox-display {
+  .animated & {
+    transition: 0.2s;
+  }
+}
+
+.checkbox-ball {
+  .animated & {
+    transition: 0.3s;
+  }
+}
+
 .checkbox {
   display: flex;
   justify-content: center;
@@ -64,9 +68,11 @@ const checked = computed({
 
   border-radius: 100vmin;
 
-  transition: 0.3s;
-
   cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 5px var(--primary-color);
+  }
 
   .checkbox-input:checked ~ & {
     background-color: var(--primary-color);
@@ -87,11 +93,11 @@ const checked = computed({
   bottom: var(--vert);
 
   border-radius: 50%;
-
-  transition: 0.3s;
   .checkbox-input:checked ~ & {
     left: calc(100% - var(--left));
     transform: translateX(-100%);
+
+    background-color: var(--primary-color-contrast);
   }
 }
 </style>

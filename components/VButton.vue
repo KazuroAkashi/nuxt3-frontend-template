@@ -110,8 +110,8 @@ if (props.listitem) {
 
   --bordercolor: var(--primary-color);
 
-  --disabledcolor: var(--foreground-color-3);
-  --bgcolor-disabled: var(--foreground-color);
+  --disabledcolor: var(--background-color-4);
+  --bgcolor-disabled: var(--foreground-color-6);
 
   --bgcolor-full: rgba(var(--primary-accent), 0.2);
   --fgcolor-full: var(--primary-accent);

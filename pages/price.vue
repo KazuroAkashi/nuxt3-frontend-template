@@ -35,8 +35,14 @@
           </template>
 
           <template #footer>
-            <VButton borderfill @click="select(1)" :disabled="selected === 1"
+            <!-- <VButton borderfill @click="select(1)" :disabled="selected === 1"
               >Choose Plan</VButton
+            > -->
+            <Button
+              type="bordered"
+              @click="select(1)"
+              :disabled="selected === 1"
+              >Choose Plan</Button
             >
           </template>
         </Card>
@@ -55,12 +61,12 @@
           </template>
 
           <template #footer>
-            <VButton
-              full
+            <Button
+              type="filled"
               @click="select(2)"
               :disabled="selected === 2"
               icon="home"
-              >Choose Plan</VButton
+              >Choose Plan</Button
             >
           </template>
         </Card>
@@ -81,14 +87,14 @@
           </template>
 
           <template #footer>
-            <VButton
-              hoverfill
-              round
+            <Button
+              type="empty"
+              corners="circle"
               @click="select(3)"
               :disabled="selected === 3"
               icon="add"
               onlyicon
-            ></VButton>
+            ></Button>
           </template>
         </Card>
       </CardGrid>
@@ -261,9 +267,24 @@
 </template>
 
 <script setup lang="ts">
+import { NotificationType } from '~/stores/notifications';
+
 const selected = ref(1);
 
 const select = (id: number) => {
+  const texts = [
+    'Selected the card',
+    'Nice',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar viverra vestibulum. Nullam et nisl eget quam accumsan dignissim ac at diam. Vivamus sagittis arcu sit amet justo euismod feugiat. Quisque non nunc facilisis, eleifend mi in, euismod enim.',
+  ];
+
+  const types = [
+    NotificationType.INFO,
+    NotificationType.SUCCESS,
+    NotificationType.WARNING,
+  ];
+
+  useNotificationStore().send(texts[id - 1], types[id - 1], 1000 * (id + 2));
   selected.value = id;
 };
 </script>

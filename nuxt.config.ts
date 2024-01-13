@@ -1,6 +1,14 @@
 export default defineNuxtConfig({
-  css: ['@/assets/main.scss'],
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
+  css: ['@/assets/main.scss', '@fortawesome/fontawesome-svg-core/styles.css'],
   vite: {
+    vue: {
+      script: {
+        defineModel: true,
+      },
+    },
     css: {
       preprocessorOptions: {
         scss: {

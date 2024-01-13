@@ -1,5 +1,5 @@
 <template>
-  <div class="textfield-wrapper" :class="props">
+  <div class="textfield-wrapper" :class="props" :title="$props.placeholder">
     <input
       :id="id"
       type="text"
@@ -7,15 +7,11 @@
       :placeholder="
         $props.icon || !$props.underlined ? $props.placeholder : ' '
       "
-      @input="
-        {
-          emit('input');
-        }
-      "
+      v-model="model"
     />
     <label :for="id" class="textfield-icon">
       <!-- <i :class="$props.icon"></i> -->
-      <span class="material-icons" aria-hidden="true">{{ $props.icon }}</span>
+      <Icon :icon="$props.icon" />
     </label>
     <div class="underline" v-if="$props.underlined"></div>
     <div class="dynplaceholder" v-if="!$props.icon && $props.underlined">
@@ -37,11 +33,17 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['input']);
+
+const model = defineModel<string>();
 </script>
 
 <style scoped lang="scss">
-$textfield-bg: var(--background-color-2);
 .textfield-wrapper {
+  --bg-color: var(--background-color-1);
+  --fg-color: var(--foreground-color-1);
+  --placeholder-color: var(--foreground-color-3);
+  --hover-color: var(--primary-color);
+
   position: relative;
   display: flex;
 
@@ -54,7 +56,7 @@ $textfield-bg: var(--background-color-2);
     bottom: 0;
     height: 2px;
 
-    background: $textfield-bg;
+    background: var(--bg-color);
   }
 }
 
@@ -70,13 +72,15 @@ $textfield-bg: var(--background-color-2);
   padding: 10px 10px 10px 50px;
   border-radius: 3px;
 
-  transition: 0.3s;
+  .animated & {
+    transition: 0.3s;
+  }
 
   outline: none;
   border: none;
 
-  background: $textfield-bg;
-  color: color-contrast($textfield-bg);
+  background: var(--bg-color);
+  color: var(--fg-color);
 
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 
@@ -107,17 +111,14 @@ $textfield-bg: var(--background-color-2);
   justify-content: center;
   align-items: center;
 
-  & > span {
+  .animated & > span {
     transition: 0.3s;
   }
 
-  .textfield-wrapper:not(.icon) > & {
-    display: none;
-  }
-
-  .textfield-input:focus ~ & > span {
-    color: var(--primary-color);
-    text-shadow: 0 0 10px var(--primary-color);
+  .textfield-input:focus ~ & .icon,
+  .textfield-input:not(:placeholder-shown) ~ & .icon {
+    --icon-color: var(--hover-color);
+    text-shadow: 0 0 10px var(--hover-color);
   }
 
   .underlined > & {
@@ -132,11 +133,13 @@ $textfield-bg: var(--background-color-2);
   bottom: 0;
   height: 2px;
 
-  background: rgba(var(--primary-color), 0.7);
+  background: var(--hover-color);
 
   transform: scaleX(0);
 
-  transition: 0.15s;
+  .animated & {
+    transition: 0.2s;
+  }
 
   .textfield-input:focus ~ &,
   .textfield-input:not(:placeholder-shown) ~ & {
@@ -154,9 +157,11 @@ $textfield-bg: var(--background-color-2);
   transform: translateY(-50%);
   transform-origin: -10px -100%;
 
-  color: var(--foreground-color-3);
+  color: var(--placeholder-color);
 
-  transition: 0.15s;
+  .animated & {
+    transition: 0.15s;
+  }
 
   .textfield-input:focus ~ &,
   .textfield-input:not(:placeholder-shown) ~ & {

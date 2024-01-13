@@ -1,15 +1,21 @@
 <template>
-  <div :class="{ animated: animated_store.animated }">
+  <Body
+    :class="{
+      animated: animated_store.animated,
+      'dark-theme': darktheme_store.darktheme,
+    }"
+  >
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-  </div>
+  </Body>
 </template>
 
 <script setup lang="ts">
-import { useAnimatedStore } from '@/stores/animated';
+import { useAnimatedStore, useDarkthemeStore } from '@/stores/options';
 
 const animated_store = useAnimatedStore();
+const darktheme_store = useDarkthemeStore();
 
 interface CustomElement extends HTMLElement {
   clickOutsideEvent: (e: MouseEvent) => any;
@@ -37,6 +43,14 @@ if (
   window.matchMedia &&
   window.matchMedia('(prefers-color-scheme: dark)').matches
 ) {
-  document.body.classList.add('dark-theme');
+  darktheme_store.turnon();
+}
+
+if (
+  window &&
+  window.matchMedia &&
+  window.matchMedia('(prefers-reduced-motion)').matches
+) {
+  animated_store.turnoff();
 }
 </script>

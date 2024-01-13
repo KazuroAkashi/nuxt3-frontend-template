@@ -1,4 +1,9 @@
-export default defineNuxtRouteMiddleware(async () => {
-  const res = await useFetch(process.env.BACKEND_URL + '/me');
-  if (res.error.value) return navigateTo('/auth/login');
+export default defineNuxtRouteMiddleware(async (to) => {
+  if (!process.client) return;
+
+  const authCheck = await useNuxtApp().$BackendService().authCheck();
+  if (!authCheck) {
+    window.sessionStorage.setItem('auth_referrer', to.path);
+    return navigateTo('/auth/login');
+  }
 });

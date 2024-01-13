@@ -38,7 +38,7 @@ defineProps({
 
   padding: 40px;
 
-  background-color: var(--background-color-2);
+  background-color: var(--background-color-1);
 
   border-radius: 7px;
 

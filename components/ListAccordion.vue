@@ -69,10 +69,8 @@ export default {
 .accordion.open:deep(.btn) {
   transform: translateY(0);
   opacity: 1;
-  pointer-events: all;
+  pointer-events: initial;
   max-width: 1000px;
-
-  --padding-hor: 10px;
 }
 
 .accordion:deep(.btn) {
@@ -80,7 +78,5 @@ export default {
   opacity: 0;
   pointer-events: none;
   max-width: 0;
-
-  --padding-hor: 10px;
 }
 </style>
