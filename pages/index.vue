@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <div class="page-inner">
+      <h1 class="touch">Touchscreen</h1>
       <div style="display: flex; column-gap: 12px; align-items: center">
         <p>Animations</p>
         <Checkbox v-model="anims" />
@@ -159,6 +160,16 @@ const btnLeftAlign = usePersistentRef('btnLeftAlign', false);
 </script>
 
 <style scoped lang="scss">
+.touch {
+  .touchscreen & {
+    color: green;
+  }
+
+  :not(.touchscreen) & {
+    color: red;
+  }
+}
+
 .page-inner {
   margin-top: 50px;
   margin-bottom: 50px;
