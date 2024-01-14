@@ -48,6 +48,8 @@
       tabindex="0"
       @click="toggleMenu"
       v-show="useIsMobile()"
+      :selected="menuopen"
+      clickable-when-selected
     ></Button>
     <Accordion class="navmenu" :open="menuopen" v-show="useIsMobile()">
       <Button
