@@ -58,14 +58,12 @@
         class="navlink"
         :href="button.href"
         :icon="button.icon"
-        @click="button.sub ? navmenuBtnClick(i) : {}"
+        @click="button.sub ? navmenuBtnClick(i) : toggleMenu()"
         :righticon="button.sub ? 'chevron_right' : undefined"
         tabindex="0"
         :href-selected="button.sub ? button.sub.filter(obj => obj.href).map(obj => obj.href!) : true"
         clickable-when-selected
         >{{ button.title }}
-
-        <template v-if="button.sub" #submenu="{ hovered }"> </template>
       </Button>
     </Accordion>
     <Accordion
@@ -86,6 +84,7 @@
         v-for="subbtn in button.sub"
         type="link"
         :href="subbtn.href"
+        @click="toggleMenu()"
         :icon="subbtn.icon"
         class="navlink"
         href-selected
