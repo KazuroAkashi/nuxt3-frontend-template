@@ -498,8 +498,12 @@ onMounted(() => {
   transform-origin: center;
   transform: scaleX(0);
 }
-.btn.selected.hover-underline .content:after,
-.btn.hover-underline:hover .content:after {
-  transform: scaleX(1);
+
+.btn.hover-underline {
+  &.selected .content:after,
+  body:not(.touchscreen) &:hover .content:after,
+  .touchscreen &.touching .content:after {
+    transform: scaleX(1);
+  }
 }
 </style>
