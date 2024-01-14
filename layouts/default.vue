@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <Notifications />
-    <Sidebar :buttons="buttons" />
+    <Sidebar :buttons="buttons" v-show="!useIsMobile()" />
     <div class="inner">
       <Navbar :buttons="navbuttons" search v-model:nav-height="navHeight" />
 

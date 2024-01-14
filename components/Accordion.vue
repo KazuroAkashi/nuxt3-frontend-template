@@ -3,7 +3,7 @@
     class="accordion"
     :class="classes"
     ref="acc"
-    :style="{ '--max-height': maxHeight + 'px' }"
+    :style="{ '--max-height': elMaxHeight + 'px' }"
   >
     <slot></slot>
   </div>
@@ -12,6 +12,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   open?: boolean;
+  maxHeight?: number;
 }>();
 
 const forceOpen = ref(true);
@@ -22,11 +23,13 @@ const classes = computed(() => ({
 }));
 
 const acc = ref() as Ref<HTMLElement>;
-const elCount = useSlots().default?.().length ?? 0;
-const maxHeight = ref(1);
+const elMaxHeight = ref(1);
 
 onMounted(() => {
-  maxHeight.value = acc.value.clientHeight;
+  elMaxHeight.value = acc.value.scrollHeight;
+  if (props.maxHeight && elMaxHeight.value > props.maxHeight)
+    elMaxHeight.value = props.maxHeight;
+
   forceOpen.value = false;
 });
 </script>
@@ -42,7 +45,8 @@ onMounted(() => {
   flex-direction: column;
   row-gap: var(--row-gap);
 
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
   .animated & {
     transition: 0.3s;

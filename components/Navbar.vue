@@ -6,6 +6,7 @@
     </h1>
     <Button
       v-for="button in $props.buttons"
+      v-show="!useIsMobile()"
       type="link"
       class="navlink"
       :href="button.href"
@@ -17,7 +18,7 @@
       >{{ button.title }}
 
       <template v-if="button.sub" #submenu="{ hovered }">
-        <Accordion :open="hovered" class="accordion">
+        <Accordion :open="hovered" class="submenu">
           <Button
             v-for="subbtn in button.sub"
             type="link"
@@ -31,11 +32,64 @@
     </Button>
     <TextField
       v-if="$props.search"
+      v-show="!useIsMobile()"
       class="navlink"
       placeholder="Search"
       icon="search"
       underlined
     />
+
+    <Button
+      class="menubtn"
+      type="empty"
+      corners="circle"
+      onlyicon
+      icon="menu"
+      tabindex="0"
+      @click="toggleMenu"
+      v-show="useIsMobile()"
+    ></Button>
+    <Accordion class="navmenu" :open="menuopen" v-show="useIsMobile()">
+      <Button
+        v-for="(button, i) in $props.buttons"
+        type="link"
+        class="navlink"
+        :href="button.href"
+        :icon="button.icon"
+        @click="button.sub ? navmenuBtnClick(i) : {}"
+        :righticon="button.sub ? 'chevron_right' : undefined"
+        tabindex="0"
+        :href-selected="button.sub ? button.sub.filter(obj => obj.href).map(obj => obj.href!) : true"
+        clickable-when-selected
+        >{{ button.title }}
+
+        <template v-if="button.sub" #submenu="{ hovered }"> </template>
+      </Button>
+    </Accordion>
+    <Accordion
+      v-for="(button, i) in $props.buttons"
+      :open="menuAccOpen[i]"
+      class="navsubmenu"
+    >
+      <Button
+        v-if="button.sub"
+        type="link"
+        @click="subBackClicked(i)"
+        icon="arrow_back"
+        class="navlink"
+        >Back</Button
+      >
+      <Button
+        v-if="button.sub"
+        v-for="subbtn in button.sub"
+        type="link"
+        :href="subbtn.href"
+        :icon="subbtn.icon"
+        class="navlink"
+        href-selected
+        >{{ subbtn.title }}</Button
+      >
+    </Accordion>
   </nav>
 </template>
 
@@ -48,9 +102,32 @@ const props = defineProps<{
 const nav = ref() as Ref<HTMLElement>;
 const navHeight = defineModel('navHeight');
 
+const menuopen = ref(false);
+const menuAccOpen = ref(Array(props.buttons.length).fill(false));
+
 onMounted(() => {
   navHeight.value = nav.value.clientHeight;
 });
+
+const toggleMenu = () => {
+  if (menuAccOpen.value.some((val) => val === true)) {
+    for (let i = 0; i < menuAccOpen.value.length; i++) {
+      menuAccOpen.value[i] = false;
+    }
+  } else {
+    menuopen.value = !menuopen.value;
+  }
+};
+
+const navmenuBtnClick = (i: number) => {
+  menuAccOpen.value[i] = !menuAccOpen.value[i];
+  menuopen.value = false;
+};
+
+const subBackClicked = (i: number) => {
+  menuAccOpen.value[i] = false;
+  menuopen.value = true;
+};
 </script>
 
 <style scoped lang="scss">
@@ -72,6 +149,8 @@ onMounted(() => {
 }
 
 .navbar {
+  position: relative;
+
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -89,7 +168,7 @@ onMounted(() => {
   position: relative;
 }
 
-.accordion {
+.submenu {
   cursor: default;
 
   --padding: 10px 30px 10px 15px;
@@ -101,5 +180,35 @@ onMounted(() => {
   left: -2px;
 
   z-index: 50;
+}
+
+.navmenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  --padding: 10px 30px 10px 15px;
+  background: var(--background-color-r2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.navsubmenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  z-index: 101;
+
+  --padding: 10px 30px 10px 15px;
+  background: var(--background-color-r2);
+}
+
+@media screen and (max-width: 600px) {
+  .navbar {
+    padding: 5px 40px;
+  }
 }
 </style>

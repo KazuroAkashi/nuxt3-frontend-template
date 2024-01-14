@@ -16,23 +16,17 @@
         <Icon icon="expand_more" />
       </div>
     </div>
-    <div
-      class="optionmenu-list"
-      :class="{ open: listopen }"
-      :style="{
-        '--el-count': $props.options.length,
-        '--text-height': textheight,
-      }"
-      ref="optionlistEl"
-    >
-      <div
+    <Accordion class="optionmenu-list" :open="listopen">
+      <Button
         v-for="(opt, i) in $props.options"
+        type="none"
+        leftalign
         class="optionmenu-option"
         @click="click(i)"
       >
         {{ opt }}
-      </div>
-    </div>
+      </Button>
+    </Accordion>
   </div>
 </template>
 
@@ -53,12 +47,9 @@ const contentText = computed(() =>
   selected.value === -1 ? props.placeholder : props.options[selected.value],
 );
 
-const wrapperEl = ref() as Ref<HTMLElement>;
 const textEl = ref() as Ref<HTMLElement>;
-const optionlistEl = ref() as Ref<HTMLElement>;
 
 const width = ref(1);
-const textheight = ref('');
 
 onMounted(() => {
   const list = [props.placeholder, ...props.options];
@@ -68,8 +59,6 @@ onMounted(() => {
     if (w > maxwidth) maxwidth = w;
   }
   width.value = maxwidth + 80;
-
-  textheight.value = useCanvas().getTextHeight('Test', textEl.value) + 'px';
 });
 
 const clickOutside = (ev: Event) => {
@@ -182,34 +171,20 @@ const click = (index: number) => {
 
   z-index: 20;
 
+  align-items: stretch !important;
+
   .animated & {
     transition: 0.3s;
   }
 
   &.open {
-    max-height: min(
-      calc(
-        var(--el-count) * (var(--text-height) + 2 * var(--option-padding-tb))
-      ),
-      150px
-    );
     box-shadow: 0 2px 6px 3px rgba(0, 0, 0, 0.6);
     z-index: 21;
   }
 }
 
 .optionmenu-option {
-  padding: var(--option-padding-tb) var(--option-padding-lr);
-
-  user-select: none;
-  cursor: pointer;
-
-  .animated & {
-    transition: 0.2s;
-  }
-
-  &:hover {
-    background: var(--bg-hover);
-  }
+  --padding-vert: var(--option-padding-tb);
+  --padding-hor: var(--option-padding-lr);
 }
 </style>

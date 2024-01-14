@@ -4,13 +4,13 @@
     :class="btnclasses"
     @mouseover="hovered = true"
     @mouseout="hovered = false"
+    @click="clicked"
+    @auxclick="middleclicked"
     :title="content ? content.innerText : ''"
   >
     <a
       class="btn"
       :class="btnclasses"
-      @click="clicked"
-      @auxclick="middleclicked"
       @touchstart="touching = true"
       @touchend="touchend"
       @contextmenu="touchend"
@@ -41,7 +41,7 @@ const emit = defineEmits(['click', 'selected']);
 
 const props = withDefaults(
   defineProps<{
-    type: 'filled' | 'bordered' | 'empty' | 'link' | 'listitem';
+    type: 'filled' | 'bordered' | 'empty' | 'link' | 'none' | 'listitem';
     corners?: 'hard' | 'round' | 'circle';
     icon?: string;
     righticon?: string;
@@ -84,6 +84,7 @@ const btnclasses = computed(() => ({
   'type-bordered': props.type === 'bordered',
   'type-empty': props.type === 'empty',
   'type-link': props.type === 'link',
+  'type-none': props.type === 'none',
   'type-listitem': props.type === 'listitem',
 
   'corners-hard': props.corners === 'hard',
@@ -203,6 +204,8 @@ onMounted(() => {
 
   --disabled-fg: var(--background-color-4);
   --disabled-bg: var(--foreground-color-6);
+
+  --bg-hover: var(--background-color-3);
 }
 
 .btn {
@@ -379,6 +382,15 @@ onMounted(() => {
   }
 }
 
+.btn.type-none {
+  flex: 1;
+  justify-content: flex-start;
+  .touchscreen &.touching,
+  body:not(.touchscreen) &:hover {
+    background: var(--bg-hover);
+  }
+}
+
 .btn.type-listitem {
   flex: 1;
   justify-content: flex-start;
@@ -429,8 +441,8 @@ onMounted(() => {
   border-radius: 200px;
 }
 
-.btn.leftalign:not(.type-link):not(.onlyicon) {
-  justify-content: flex-start;
+.btn.leftalign:not(.type-link):not(.type-none):not(.onlyicon) {
+  justify-content: stretch;
 
   padding-left: calc(var(--padding-hor) - 8px);
   padding-right: calc(2 * var(--padding-hor));
@@ -438,7 +450,7 @@ onMounted(() => {
   column-gap: 18px;
 }
 
-.btn-wrapper.textleft {
+.btn-wrapper.leftalign {
   justify-content: flex-start;
 }
 

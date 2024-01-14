@@ -1,5 +1,5 @@
 <template>
-  <SidebarBase push open>
+  <SidebarBase :push="!useIsTouchscreen()">
     <template #header="{ toggle, open }">
       <div class="header right">
         <Button
