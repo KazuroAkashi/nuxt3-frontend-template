@@ -6,6 +6,10 @@
       touchscreen: useIsTouchscreen(),
     }"
   >
+    <div class="loading-overlay" v-show="loading">
+      <Icon icon="pending" />
+      <h1>Loading...</h1>
+    </div>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -17,6 +21,13 @@ import { useAnimatedStore, useDarkthemeStore } from '@/stores/options';
 
 const animated_store = useAnimatedStore();
 const darktheme_store = useDarkthemeStore();
+
+const loading = ref(true);
+
+onMounted(async () => {
+  await nextTick();
+  loading.value = false;
+});
 
 interface CustomElement extends HTMLElement {
   clickOutsideEvent: (e: MouseEvent) => any;
@@ -55,3 +66,23 @@ if (
   animated_store.turnoff();
 }
 </script>
+
+<style lang="scss">
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  column-gap: 6px;
+
+  background: var(--background-color);
+
+  z-index: 9999;
+}
+</style>
