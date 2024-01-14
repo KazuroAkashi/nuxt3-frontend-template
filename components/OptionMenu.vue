@@ -6,7 +6,7 @@
       width: width + 'px',
     }"
     @click="listopen = !listopen"
-    ref="wrapperEl"
+    v-click-outside="clickOutside"
   >
     <div class="optionmenu-inner">
       <div ref="textEl" class="optionmenu-content">
@@ -70,17 +70,10 @@ onMounted(() => {
   width.value = maxwidth + 80;
 
   textheight.value = useCanvas().getTextHeight('Test', textEl.value) + 'px';
-
-  document.addEventListener('click', clickOutside);
-});
-
-onUnmounted(() => {
-  document.removeEventListener('click', clickOutside);
 });
 
 const clickOutside = (ev: Event) => {
-  if (wrapperEl.value && !wrapperEl.value.contains(ev.target as any))
-    listopen.value = false;
+  listopen.value = false;
 };
 
 const click = (index: number) => {

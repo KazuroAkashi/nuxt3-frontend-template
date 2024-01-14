@@ -186,6 +186,10 @@ const btnLeftAlign = usePersistentRef('btnLeftAlign', false);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
+  .touchscreen & {
+    grid-template-columns: 1fr;
+  }
+
   row-gap: 20px;
   column-gap: 20px;
 }
