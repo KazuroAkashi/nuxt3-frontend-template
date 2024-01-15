@@ -6,9 +6,9 @@
       touchscreen: useIsTouchscreen(),
     }"
   >
-    <div class="loading-overlay" v-show="loading">
-      <Icon icon="pending" />
-      <h1>Loading...</h1>
+    <div class="loading-overlay" v-if="loading">
+      <div class="loading-icon"></div>
+      <p class="loading-text">Initializing...</p>
     </div>
     <NuxtLayout>
       <NuxtPage />
@@ -78,11 +78,47 @@ if (
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
-  column-gap: 6px;
+  row-gap: 10px;
 
   background: var(--background-color);
 
   z-index: 9999;
+
+  .loading-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    clip-path: polygon(50% 0, 100% 0, 100% 50%, 50% 50%);
+    animation: load 0.8s infinite linear;
+
+    display: inline;
+    width: 4rem;
+    height: 4rem;
+
+    border: 3px solid #00d2e1;
+    border-radius: 4rem;
+  }
+
+  .loading-text {
+    position: absolute;
+    top: calc(50% + 1.5rem + 2.5rem);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+    font-size: 1.25rem;
+  }
+}
+
+@keyframes load {
+  from {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
 }
 </style>
