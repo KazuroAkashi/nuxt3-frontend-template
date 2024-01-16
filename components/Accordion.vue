@@ -48,6 +48,11 @@ onMounted(() => {
   overflow-x: hidden;
   overflow-y: scroll;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+
   .animated & {
     transition: 0.3s;
   }
